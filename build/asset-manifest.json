@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-forked/static/css/main.a9089c74.chunk.css",
+    "main.js": "/react-forked/static/js/main.95cfda60.chunk.js",
+    "main.js.map": "/react-forked/static/js/main.95cfda60.chunk.js.map",
+    "runtime~main.js": "/react-forked/static/js/runtime~main.95d02caa.js",
+    "runtime~main.js.map": "/react-forked/static/js/runtime~main.95d02caa.js.map",
+    "static/js/2.1a240082.chunk.js": "/react-forked/static/js/2.1a240082.chunk.js",
+    "static/js/2.1a240082.chunk.js.map": "/react-forked/static/js/2.1a240082.chunk.js.map",
+    "index.html": "/react-forked/index.html",
+    "precache-manifest.4973ec522057dd946055ce7c8d5eefdd.js": "/react-forked/precache-manifest.4973ec522057dd946055ce7c8d5eefdd.js",
+    "service-worker.js": "/react-forked/service-worker.js",
+    "static/css/main.a9089c74.chunk.css.map": "/react-forked/static/css/main.a9089c74.chunk.css.map"
+  }
+}
