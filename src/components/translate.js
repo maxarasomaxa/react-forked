@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+
 const API_KEY = "dict.1.1.20261026T202807Z.f72da52fe0e7d7ac.586f6f27e86da017fdc36c97bb93ae8982bea0a2"; 
 
 const doTranslation = async (input, languageCode, cancelToken) => {
   try {
+    // Определяем направление: если есть русские буквы - переводим с русского, иначе с английского
+    const isCyrillic = /[а-яё]/i.test(input);
+    const langPair = isCyrillic ? "ru-en" : "en-ru";
+
     const { data } = await axios.get(
       "https://dictionary.yandex.net/api/v1/dicservice.json/lookup",
       {
         params: {
           key: API_KEY,
-          lang: languageCode, // например, "en-ru"
+          lang: langPair,
           text: input
         },
         cancelToken: cancelToken.token
@@ -33,6 +38,7 @@ export default ({ language, text }) => {
 
   useEffect(() => {
     if (!text) {
+      setTranslated("");
       return;
     }
 
