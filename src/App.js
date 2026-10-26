@@ -1,19 +1,25 @@
-import "./styles.css";
-import React, { useState } from "react";
-import Field from "./components/field";
-import Languages from "./components/languages";
-import Translate from "./components/translate";
+import React, { useState } from 'react';
+import Translate from './components/translate';
+import './App.css';
 
-export default function App() {
-  const [language, setLanguage] = useState("en");
-  const [text, setText] = useState("Реакция");
+function App() {
+  const [text, setText] = useState('');
 
   return (
-    <div>
-      <Field label="Введите русские слова" onChange={setText} value={text} />
-      <Languages language={language} onLanguageChange={setLanguage} />
-      <hr />
-      <Translate text={text} language={language} />
+    <div className="App" style={{ padding: '20px' }}>
+      {/* Единственный элемент input на странице */}
+      <input 
+        type="text" 
+        value={text} 
+        onChange={(e) => setText(e.target.value)} 
+        placeholder="Введите русское слово..."
+        style={{ fontSize: '20px', padding: '10px', width: '300px' }}
+      />
+      
+      {/* Компонент Translate выведет результат в единственный тег h1 */}
+      <Translate text={text} />
     </div>
   );
 }
+
+export default App;
