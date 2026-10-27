@@ -5,18 +5,13 @@ const API_KEY = "dict.1.1.20261026T202807Z.f72da52fe0e7d7ac.586f6f27e86da017fdc3
 
 const doTranslation = async (input, cancelToken) => {
   try {
-    // Если в тексте есть русские буквы, переводим ru-en, иначе en-ru
     const isCyrillic = /[а-яё]/i.test(input);
     const langPair = isCyrillic ? "ru-en" : "en-ru";
 
     const { data } = await axios.get(
       "https://dictionary.yandex.net/api/v1/dicservice.json/lookup",
       {
-        params: {
-          key: API_KEY,
-          lang: langPair, // <-- ТЕПЕРЬ ЗДЕСЬ ПАРА ЯЗЫКОВ
-          text: input
-        },
+        params: { key: API_KEY, lang: langPair, text: input },
         cancelToken: cancelToken.token
       }
     );
@@ -24,14 +19,12 @@ const doTranslation = async (input, cancelToken) => {
     if (data.def && data.def.length > 0 && data.def[0].tr) {
       return data.def[0].tr[0].text;
     }
-    return "Слово не найдено";
+    return "";
   } catch (err) {
-    console.error(err);
-    return "Ошибка перевода";
+    return "";
   }
 };
 
-// Убираем language из параметров, чтобы он не мешал
 export default ({ text }) => {
   const [translated, setTranslated] = useState("");
 
@@ -42,22 +35,14 @@ export default ({ text }) => {
     }
 
     const cancelToken = axios.CancelToken.source();
-    
-    // Небольшая задержка, чтобы не отправлять запрос на каждую букву
-    const timeoutId = setTimeout(() => {
-        doTranslation(text, cancelToken).then(setTranslated);
-    }, 500); 
+    // Убрали setTimeout, чтобы перевод появлялся моментально
+    doTranslation(text, cancelToken).then(setTranslated);
 
     return () => {
-      clearTimeout(timeoutId);
       try { cancelToken.cancel(); } catch (err) {}
     };
-  }, [text]); // Убрали language из зависимостей
+  }, [text]);
 
-  return (
-    <div>
-      <label className="label">Output</label>
-      <h1 className="title">{translated}</h1>
-    </div>
-  );
+  // Возвращаем только один h1 и ничего больше
+  return <h1>{translated}</h1>;
 };
